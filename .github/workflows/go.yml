@@ -24,8 +24,8 @@ jobs:
     - name: Build
       run: go build -v ./...
 
-    - name: Test
-      run: go test -v ./...
+    - name: List files
+        run: ls
     - name: Upload
       uses: actions/upload-artifact@v3
       with:
