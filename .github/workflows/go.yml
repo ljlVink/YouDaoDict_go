@@ -16,7 +16,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Set up Go
+    - name: 创建环境
       uses: actions/setup-go@v3
       with:
         go-version: 1.18
@@ -24,10 +24,10 @@ jobs:
     - name: 安装gcc-aarch64
       run: sudo apt-get install gcc-aarch64-linux-gnu
 
-    - name: Build
+    - name: 编译
       run: GOARM=7 CGO_ENABLED=1 GOOS=linux GOARCH=arm64 CC=aarch64-linux-gnu-gcc go build -o YouDaoManager
 
-    - name: Upload
+    - name: 上传
       uses: actions/upload-artifact@v3
       with:
         name: YouDaoManager

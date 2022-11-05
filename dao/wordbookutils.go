@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"log"
 	"strconv"
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 //status true 成功
