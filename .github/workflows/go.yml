@@ -20,6 +20,13 @@ jobs:
       uses: actions/setup-go@v3
       with:
         go-version: 1.18
+    - name: Set env vars
+      run: |
+          echo "CGO_ENABLED=1" >> $GITHUB_ENV
+          echo "GOOS=linux" >> $GITHUB_ENV
+          echo "GOARCH=arm64" >> $GITHUB_ENV
+          echo "GOARM=7" >> $GITHUB_ENV
+
 
     - name: Build
       run: go build -o YouDaoManager
@@ -27,5 +34,5 @@ jobs:
     - name: Upload
       uses: actions/upload-artifact@v3
       with:
-        name: my-artifact
+        name: YouDaoManager
         path: YouDaoManager
