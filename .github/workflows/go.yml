@@ -26,3 +26,8 @@ jobs:
 
     - name: Test
       run: go test -v ./...
+    - name: Upload
+      uses: actions/upload-artifact@v3
+      with:
+        name: my-artifact
+        path: ./YouDaoManager
