@@ -22,10 +22,8 @@ jobs:
         go-version: 1.18
 
     - name: Build
-      run: go build -v ./...
+      run: go build -o YouDaoManager
 
-    - name: List files
-      run: ls
     - name: Upload
       uses: actions/upload-artifact@v3
       with:
