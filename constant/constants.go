@@ -23,3 +23,12 @@ var Tool_upload_music="/YouDaoManager/tool/MusicUpload"
 var DB_driver_name = "sqlite3"
 
 var DB_wordbook_filepath = "/userdisk/database/wordbook.db"
+
+var DB_query_tables_cmd = "SELECT name FROM sqlite_master WHERE type='table' order by name"
+
+
+type Translate_struct struct {
+	Pos    string    `json:"pos"`
+	Tran string `json:"tran"`
+}
+
