@@ -1,7 +1,7 @@
 # This workflow will build a golang project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
 
-name: Go
+name: 自动构建
 
 on:
   push:
@@ -19,13 +19,10 @@ jobs:
     - name: 创建环境
       uses: actions/setup-go@v3
       with:
-        go-version: 1.18
-
-    - name: 安装gcc-aarch64
-      run: sudo apt-get install gcc-aarch64-linux-gnu
+        go-version: 1.19
 
     - name: 编译
-      run: GOARM=7 CGO_ENABLED=1 GOOS=linux GOARCH=arm64 CC=aarch64-linux-gnu-gcc go build -o YouDaoManager
+      run: GOARM=7 CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o YouDaoManager
 
     - name: 上传
       uses: actions/upload-artifact@v3
