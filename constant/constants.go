@@ -1,6 +1,6 @@
 package constant
 
-var Version ="1.0"
+var Version ="1.1"
 
 var Api_connect_test="/YouDaoManager/apitest/conntest"
 

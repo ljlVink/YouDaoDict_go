@@ -13,8 +13,7 @@ import (
 //status true 成功
 //status false 失败
 func GetWordBook() (msg string,status bool){
-	log.SetPrefix("[SQL_wordbook]")
-	log.Println("wordbook!")
+	log.SetPrefix("[DAO_wordbook]")
 	db, err := sql.Open(constant.DB_driver_name,constant.DB_wordbook_filepath)
 	if err!=nil{
 		log.Println(err)
@@ -72,6 +71,5 @@ func GetWordBook() (msg string,status bool){
 			}
 		}
 	}
-	log.Println("count=",cnt,",res=",result)
 	return result,true
 }

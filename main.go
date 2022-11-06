@@ -14,7 +14,7 @@ import (
 )
 
 func main(){
-	log.Println("hihi")
+	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
 	//链接测试
 	r.GET(constant.Api_connect_test, func(context *gin.Context) {
@@ -31,7 +31,7 @@ func main(){
 		if status{
 			context.String(200,bookcontent)
 		}else{
-			context.String(200,"ERROR")
+			context.String(400,"ERROR")
 		}
 	})
 	//开启 ssh
@@ -46,22 +46,27 @@ func main(){
 	//关闭 ssh
 	r.GET(constant.Sys_stop_ssh,func (context *gin.Context)  {
 		if sshutils.OpenSSH(false){
-			context.String(200,"OK")
+			context.String(200,"OK,default user=root,password=CherryYoudao")
+		}else{
+			context.String(400,"ERROR")
 		}
-		context.String(400,"ERROR")
 	})
 	//开启adb 自动授权
 	r.GET(constant.Sys_open_adb,func(context *gin.Context) {
 		adbutils.OpenAdb(true)
 		context.String(200,"OK")
 	})
+	//关闭adb 自动授权
 	r.GET(constant.Sys_stop_adb,func(context *gin.Context) {
 		adbutils.OpenAdb(false)
 		context.String(200,"OK")
 	})
+	//设备重启
 	r.GET(constant.Sys_reboot,func (context *gin.Context)  {
 		utils.System_reboot()
+		context.String(200,"OK")
 	})
+	//音乐上传
 	r.POST(constant.Tool_upload_music, func(c *gin.Context) {
         file, _ := c.FormFile("file")
         log.Println(file.Filename)
@@ -69,5 +74,6 @@ func main(){
         c.SaveUploadedFile(file,dst)
         c.String(200, fmt.Sprintf("'%s' uploaded", file.Filename))
     })
+
 	r.Run(":6588") 
 }
