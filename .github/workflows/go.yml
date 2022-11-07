@@ -24,8 +24,11 @@ jobs:
         go-version: 1.19
 
     - name: 编译
-      run: GOARM=7 CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o YouDaoManager
-
+      run: GOARM=7 CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -ldflags="-s -w" -o YouDaoManager
+    - name: UPX GitHub Action
+      uses: crazy-max/ghaction-upx@v2.1.0
+      files: YouDaoManager
+      
     - name: 上传
       uses: actions/upload-artifact@v3
       with:
