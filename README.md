@@ -26,8 +26,7 @@
 |重启launcher|/YouDaoManager/system/restartlauncher|GET|重启有道桌面|
 |关闭程序|/YouDaoManager/apitest/stop|**POST**|服务停止|
 |链接测试|/YouDaoManager/apitest/conntest|GET|测试是否连接成功|
-
-
+|获取音乐文件夹|/YouDaoManager/tool/getmusicFolder|GET|返回格式["aaa.mp3","bbb.mp3"]|
 
 需要带参数的
 |功能|api|方法|备注|

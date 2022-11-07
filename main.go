@@ -1,15 +1,17 @@
 package main
 
 import (
-	_ "YouDaoManager/daemon"
 	adbutils "YouDaoManager/adb"
 	constant "YouDaoManager/constant"
-	sshutils "YouDaoManager/ssh"
+	_ "YouDaoManager/daemon"
 	wordbookutils "YouDaoManager/dao"
+	sshutils "YouDaoManager/ssh"
 	systemutils "YouDaoManager/utils"
+	musicfolder "YouDaoManager/musicfolder"
+	"fmt"
 	"log"
 	"os"
-	"fmt"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -66,6 +68,12 @@ func main(){
 		systemutils.System_reboot()
 		context.String(200,"OK")
 	})
+	//重启 launcher
+	r.GET(constant.Sys_restart_ydlauncher,func(context *gin.Context) {
+		systemutils.Restart_launcher()
+		context.String(200,"OK")
+	})
+
 	//音乐上传
 	r.POST(constant.Tool_upload_music, func(c *gin.Context) {
         file, _ := c.FormFile("file")
@@ -74,9 +82,10 @@ func main(){
         c.SaveUploadedFile(file,dst)
         c.String(200, fmt.Sprintf("'%s' uploaded", file.Filename))
     })
-	r.GET(constant.Sys_restart_ydlauncher,func(context *gin.Context) {
-		systemutils.Restart_launcher()
-		context.String(200,"OK")
+	//获取音乐文件夹内文件
+	r.GET(constant.Tool_get_musicFolder,func(context *gin.Context) {
+		result:=musicfolder.GetFolder()
+		context.String(200,result)
 	})
 	r.Run(":6588") 
 }

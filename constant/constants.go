@@ -22,6 +22,8 @@ var Tool_get_WordBook="/YouDaoManager/tool/GetWordBook"
 
 var Tool_upload_music="/YouDaoManager/tool/MusicUpload"
 
+var Tool_get_musicFolder="/YouDaoManager/tool/getmusicFolder"
+
 var DB_driver_name = "sqlite3"
 
 var DB_wordbook_filepath = "/userdisk/database/wordbook.db"
@@ -34,3 +36,6 @@ type Translate_struct struct {
 	Tran string `json:"tran"`
 }
 
+type Folder_struct struct{
+	Folder []string `json:"folder"`
+}
