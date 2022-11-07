@@ -39,29 +39,16 @@ func GetWordBook() (msg string,status bool){
 				log.Println(err)
 				return  "",false
 			}
-			var word string
-			var translate string
-			var dict_type int
-			var src_lang string
-			var dst_lang string
-			var wordgroup_type int
-			var lang_type int
-			var item_state int
-			var sync_state int
-			var timestamp int
-			var example sql.NullString
+			var book constant.Dao_wordbook
 			for rows.Next() {
-				err=rows.Scan(&word,&translate, &dict_type, &src_lang, &dst_lang,&wordgroup_type,&lang_type,&item_state,&sync_state,&timestamp,&example)
+				err=rows.Scan(&book.Word,&book.Translate, &book.Dict_type, &book.Src_lang, &book.Dst_lang,&book.Wordgroup_type,&book.Lang_type,&book.Item_state,&book.Sync_state,&book.Timestamp,&book.Example)
 				if err!=nil{
 					log.Println(err)
 					return  "",false
 				}
-				result+=strconv.Itoa(cnt)+", "+word+"\n"
+				result+=strconv.Itoa(cnt)+", "+book.Word+"\n"
 				var translate_struct constant.Translate_struct
-				translate_struct.Pos=""
-				translate_struct.Tran=""
-		
-				errs := json.Unmarshal([]byte(translate), &translate_struct)
+				errs := json.Unmarshal([]byte(book.Translate), &translate_struct)
 				if errs != nil {
 					log.Println(errs)
 					return "",false
@@ -72,4 +59,21 @@ func GetWordBook() (msg string,status bool){
 		}
 	}
 	return result,true
-}
+}/*
+func Insertwordbok(table string,book constant.Dao_wordbook) error {
+	db, err := sql.Open(constant.DB_driver_name,constant.DB_wordbook_filepath)
+	if err!=nil{
+		return err
+	}
+	sql := "insert into "+table+" (word,translate,dict_type,src_lang,dst_lang,wordgroup_type,lang_type,item_state,sync_state,timestamp,example) values(?,?,?,?,?,?,?,?,?,?,?)"
+	var transbase constant.Translate_struct
+	transbase.Pos=""
+	transbase.Tran=book.Translate
+	bytes,_:=json.Marshal(&transbase)
+	stmt, err := db.Prepare(sql)
+	if err != nil {
+		return err
+	}
+	_, err = stmt.Exec(book.Word, string(bytes),406,"en","zh-CHS", book.Wordgroup_type,1,1,1,time.Now().UnixNano() / 1e6,book.Example)
+	return err
+}*/
