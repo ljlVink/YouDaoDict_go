@@ -5,13 +5,12 @@ import (
 	constant "YouDaoManager/constant"
 	_ "YouDaoManager/daemon"
 	wordbookutils "YouDaoManager/dao"
+	musicfolder "YouDaoManager/musicfolder"
 	sshutils "YouDaoManager/ssh"
 	systemutils "YouDaoManager/utils"
-	musicfolder "YouDaoManager/musicfolder"
 	"fmt"
 	"log"
 	"os"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -86,6 +85,18 @@ func main(){
 	r.GET(constant.Tool_get_musicFolder,func(context *gin.Context) {
 		result:=musicfolder.GetFolder()
 		context.String(200,result)
+	})
+	r.POST(constant.Tool_remove_music,func(context *gin.Context) {
+		json := constant.Music_remove_struct{}
+		context.BindJSON(&json)
+		filename:=json.Filename
+		log.Println(filename)
+		err:=musicfolder.RemoveMusic(string(filename))
+		if err!=nil{
+			context.String(400,"ERROR")
+		}else{
+			context.String(200,"OK")
+		}
 	})
 	r.Run(":6588") 
 }

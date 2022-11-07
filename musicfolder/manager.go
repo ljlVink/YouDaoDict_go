@@ -22,3 +22,13 @@ func GetFolder() string{
 	bytes,_:=json.Marshal(folder)
 	return string(bytes)
 }
+func RemoveMusic(filename string)(err error){
+	abspath:="/userdisk/Music/"+filename
+	log.Println("abs:",abspath)
+	e:=os.Remove(abspath)
+	if e!=nil{
+		log.Println(e)
+		return e
+	}
+	return
+}
