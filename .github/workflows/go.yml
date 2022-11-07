@@ -6,6 +6,8 @@ name: 自动构建
 on:
   push:
     branches: [ "main" ]
+    tags:
+      - "v*"
   pull_request:
     branches: [ "main" ]
 
@@ -32,6 +34,7 @@ jobs:
     - name: 上传release
       uses: yakuhzi/action-release@v1
       with:
+        tag: ${{ github.ref }}
         file: YouDaoManager
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
