@@ -23,9 +23,17 @@
 |开启adb|/YouDaoManager/system/openadb|GET|仍然需要在客户端打开，默认授权auth|
 |关闭adb|/YouDaoManager/system/openadb|GET||
 |重启|/YouDaoManager/system/reboot|GET||
-|上传文件到音乐文件夹|/YouDaoManager/tool/MusicUpload|**POST**|
+|重启launcher|/YouDaoManager/system/restartlauncher|GET|重启有道桌面|
 |关闭程序|/YouDaoManager/apitest/stop|**POST**|服务停止|
 |链接测试|/YouDaoManager/apitest/conntest|GET|测试是否连接成功|
+
+
+
+需要带参数的
+|功能|api|方法|备注|
+|-|-|-|-|
+|上传文件到音乐文件夹|/YouDaoManager/tool/MusicUpload|**POST**|直接上传音乐文件即可|
+
 
 
 ### 构建

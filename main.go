@@ -6,7 +6,7 @@ import (
 	constant "YouDaoManager/constant"
 	sshutils "YouDaoManager/ssh"
 	wordbookutils "YouDaoManager/dao"
-	"YouDaoManager/utils"
+	systemutils "YouDaoManager/utils"
 	"log"
 	"os"
 	"fmt"
@@ -63,7 +63,7 @@ func main(){
 	})
 	//设备重启
 	r.GET(constant.Sys_reboot,func (context *gin.Context)  {
-		utils.System_reboot()
+		systemutils.System_reboot()
 		context.String(200,"OK")
 	})
 	//音乐上传
@@ -74,6 +74,9 @@ func main(){
         c.SaveUploadedFile(file,dst)
         c.String(200, fmt.Sprintf("'%s' uploaded", file.Filename))
     })
-
+	r.GET(constant.Sys_restart_ydlauncher,func(context *gin.Context) {
+		systemutils.Restart_launcher()
+		context.String(200,"OK")
+	})
 	r.Run(":6588") 
 }

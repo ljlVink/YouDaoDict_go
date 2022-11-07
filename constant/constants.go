@@ -16,6 +16,8 @@ var Sys_stop_adb="/YouDaoManager/system/stopadb"
 
 var Sys_reboot="/YouDaoManager/system/reboot"
 
+var Sys_restart_ydlauncher="/YouDaoManager/system/restartlauncher"
+
 var Tool_get_WordBook="/YouDaoManager/tool/GetWordBook"
 
 var Tool_upload_music="/YouDaoManager/tool/MusicUpload"

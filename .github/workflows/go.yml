@@ -31,10 +31,3 @@ jobs:
       with:
         name: YouDaoManager
         path: YouDaoManager
-    - name: 上传release
-      uses: yakuhzi/action-release@v1
-      with:
-        tag: ${{ github.ref }}
-        file: YouDaoManager
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
