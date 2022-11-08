@@ -11,7 +11,7 @@
 ### 安装到开机自启
 
 ```
-目前还不完善，建议吧主程序挪到/userdata中，拷贝项目`S75YouDaoMgr`到/etc/init.d中
+sh -c "$(wget https://ghproxy.com/https://raw.githubusercontent.com/ljlVink/YouDaoDict_go/main/install -O -)"
 ```
 
 ### 功能
