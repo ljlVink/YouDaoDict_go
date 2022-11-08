@@ -15,6 +15,9 @@ sh -c "$(wget https://ghproxy.com/https://raw.githubusercontent.com/ljlVink/YouD
 ```
 
 ### 功能
+
+成功安装后会在内网ip:6588端口启动
+
 |功能|api|方法|备注|
 |-|-|-|-|
 |获取单词本|/YouDaoManager/tool/GetWordBook|GET|动态获取，实时更新|
@@ -38,7 +41,7 @@ sh -c "$(wget https://ghproxy.com/https://raw.githubusercontent.com/ljlVink/YouD
 ### 构建
 
 ```
-GOARM=7 CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o YouDaoManager
+GOARM=7 CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -ldflags="-s -w" -o YouDaoManager
 ```
 
 可以在actions下载最新构建产物
