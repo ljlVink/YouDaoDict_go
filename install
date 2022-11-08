@@ -1,10 +1,8 @@
 #!/bin/sh
-printf "remounting"
+printf "remounting\n"
 mount -o remount -rw /
-
-
-
 wget -O /userdata/YouDaoManager https://ghproxy.com/https://github.com/ljlVink/YouDaoDict_go/releases/latest/download/YouDaoManager 
 chmod 777 /userdata/YouDaoManager
 wget  -O /etc/init.d/S75YouDaoMgr https://ghproxy.com/https://raw.githubusercontent.com/ljlVink/YouDaoDict_go/main/S75YouDaoMgr
 chmod 777 /etc/init.d/S75YouDaoMgr
+reboot
