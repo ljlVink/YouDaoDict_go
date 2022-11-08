@@ -1,0 +1,9 @@
+#!/bin/sh
+cd /userdata
+wget https://ghproxy.com/https://github.com/ljlVink/YouDaoDict_go/releases/latest/download/YouDaoManager
+chmod 777 YouDaoManager
+wget https://ghproxy.com/https://raw.githubusercontent.com/ljlVink/YouDaoDict_go/main/S75YouDaoMgr
+mount -o remount -rw /
+cp S75YouDaoMgr /etc/init.d
+chmod 777 S75YouDaoMgr
+reboot
