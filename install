@@ -1,6 +1,10 @@
 #!/bin/sh
-wget https://ghproxy.com/https://github.com/ljlVink/YouDaoDict_go/releases/latest/download/YouDaoManager -O ./userdata/YouDaoManager
-chmod 777 /userdata/YouDaoManager
+printf "remounting"
 mount -o remount -rw /
-wget https://ghproxy.com/https://raw.githubusercontent.com/ljlVink/YouDaoDict_go/main/S75YouDaoMgr -O /etc/init.d/S75YouDaoMgr
+
+
+
+wget -O ./userdata/YouDaoManager https://ghproxy.com/https://github.com/ljlVink/YouDaoDict_go/releases/latest/download/YouDaoManager 
+chmod 777 /userdata/YouDaoManager
+wget  -O /etc/init.d/S75YouDaoMgr https://ghproxy.com/https://raw.githubusercontent.com/ljlVink/YouDaoDict_go/main/S75YouDaoMgr
 chmod 777 /etc/init.d/S75YouDaoMgr
