@@ -2,24 +2,43 @@ package adb
 
 import (
 	cmd "YouDaoManager/cmd"
+	"log"
+	"os"
 )
 func OpenAdb(open bool){
+	log.SetPrefix("[ADButils] ")
 	if open{
-		cmd.RunCommand("./","/bin/bash","echo","usb_mtp_on",">","/tmp/.usb_config")
+		writefile("/tmp/.usb_config","usb_mtp_en\nusb_adb_en\n")
 		//追加
-		cmd.RunCommand("./","/bin/bash","echo","usb_adb_on",">>","/tmp/.usb_config")
-		//有道是不是打错了...反正都写进去吧，在2.0.4至少这样的
-		cmd.RunCommand("./","/bin/bash","echo","usb_adb_en",">>","/tmp/.usb_config")
-		//放权
 		cmd.RunCommand("./","/bin/touch","/tmp/.adb_auth_verified")
-		//?不太好使，还是要手动确定
-		cmd.RunCommand("./","/bin/bash","mkdir","/dev/usb-ffs/adb","-m","0770")
-		//mount -o uid=2000,gid=2000 -t functionfs adb /dev/usb-ffs/adb
-		cmd.RunCommand("./","/bin/mount","-o","uid=2000,gid=2000","-t","functionfs","adb","/dev/usb-ffs/adb")
-		//start-stop-daemon --start --quiet --background --exec /usr/bin/adbd
-		cmd.RunCommand("./","/sbin/start-stop-daemon","--start","--quiet","--background","--exec","/usr/bin/adbd")
+		//重启系统服务
+		cmd.RunCommand("./","/etc/init.d/S98usbdevice","restart")
 	}else{
-		cmd.RunCommand("./","/bin/bash","echo","usb_mtp_on",">","/tmp/.usb_config")
-		cmd.RunCommand("./","/bin/bash","rm","/tmp/.adb_auth_verified")
+		removeFile("/tmp/.usb_config")
+		writefile("/tmp/.usb_config","usb_mtp_en\n")
+		removeFile("/tmp/.adb_auth_verified")
+		cmd.RunCommand("./","/etc/init.d/S98usbdevice","restart","mtp")
 	}
+}
+func writefile  (file string,content string){
+	ffile,err :=os.OpenFile(file, os.O_RDWR|os.O_TRUNC|os.O_CREATE, 0755)
+	if err != nil{
+		log.Println("Open file err =", err)
+		return
+	}
+	defer ffile.Close()
+	n, err := ffile.Write([]byte(content))
+	if err != nil{
+		log.Println("Write file error =", err)
+		return
+	}
+	log.Println("WriteTo file success, n =", n)
+}
+func removeFile(filename string)(err error){
+	e:=os.Remove(filename)
+	if e!=nil{
+		log.Println(e)
+		return e
+	}
+	return
 }
