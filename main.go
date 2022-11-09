@@ -13,8 +13,12 @@ import (
 	"os"
 	"github.com/gin-gonic/gin"
 )
-
+func applog(logg string){
+	log.SetPrefix("[APP] ")
+	log.Println(logg)
+}
 func main(){
+	applog("YouDaoManager Version:"+constant.Version)
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
 	//链接测试
@@ -76,7 +80,7 @@ func main(){
 	//音乐上传
 	r.POST(constant.Tool_upload_music, func(c *gin.Context) {
         file, _ := c.FormFile("file")
-        log.Println(file.Filename)
+        applog("upload music:"+file.Filename)
         dst := "/userdisk/Music/" + file.Filename
         c.SaveUploadedFile(file,dst)
         c.String(200, fmt.Sprintf("'%s' uploaded", file.Filename))
@@ -90,7 +94,7 @@ func main(){
 		json := constant.Music_remove_struct{}
 		context.BindJSON(&json)
 		filename:=json.Filename
-		log.Println(filename)
+		applog(filename)
 		err:=musicfolder.RemoveMusic(string(filename))
 		if err!=nil{
 			context.String(400,"ERROR")

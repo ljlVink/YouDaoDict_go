@@ -20,7 +20,7 @@ func OpenAdb(open bool){
 		cmd.RunCommand("./","/etc/init.d/S98usbdevice","restart","mtp")
 	}
 }
-func writefile  (file string,content string){
+func writefile(file string,content string){
 	ffile,err :=os.OpenFile(file, os.O_RDWR|os.O_TRUNC|os.O_CREATE, 0755)
 	if err != nil{
 		log.Println("Open file err =", err)

@@ -2,7 +2,7 @@ package constant
 
 import ("database/sql")
 
-var Version ="1.1"
+var Version ="1.2"
 
 var Api_connect_test="/YouDaoManager/apitest/conntest"
 
