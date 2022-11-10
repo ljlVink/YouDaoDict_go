@@ -13,32 +13,46 @@
 ```
 sh -c "$(wget https://ghproxy.com/https://raw.githubusercontent.com/ljlVink/YouDaoDict_go/main/install -O -)"
 ```
-
-### 功能
-
 成功安装后会在内网ip:6588端口启动
 
-|功能|api|方法|备注|
-|-|-|-|-|
-|获取单词本|/YouDaoManager/tool/GetWordBook|GET|动态获取，实时更新|
-|开启SSH|/YouDaoManager/system/startssh|GET||
-|关闭SSH|/YouDaoManager/system/stopssh|GET||
-|开启adb|/YouDaoManager/system/openadb|GET|仍然需要在客户端打开，默认授权auth|
-|关闭adb|/YouDaoManager/system/openadb|GET||
-|重启|/YouDaoManager/system/reboot|GET||
-|重启launcher|/YouDaoManager/system/restartlauncher|GET|重启有道桌面|
-|关闭程序|/YouDaoManager/apitest/stop|**POST**|服务停止|
-|链接测试|/YouDaoManager/apitest/conntest|GET|测试是否连接成功|
-|获取音乐文件夹|/YouDaoManager/tool/getmusicFolder|GET|返回格式["aaa.mp3","bbb.mp3"]|
-
-需要带参数的
-|功能|api|方法|备注|
-|-|-|-|-|
-|上传文件到音乐文件夹|/YouDaoManager/tool/MusicUpload|**POST**|直接上传音乐文件即可|
+### 功能
+api测试功能
+|功能|api|方法|备注|返回|status code|
+|-|-|-|-|-|-|
+|关闭程序|/YouDaoManager/apitest/stop|**POST**|服务停止|无返回或者done|200|
+|链接测试|/YouDaoManager/apitest/conntest|GET|测试是否连接成功|connect OK!|200|
 
 
 
-### 构建
+系统功能
+
+|功能|api|方法|返回|status code|
+|-|-|-|-|-|
+|开启SSH|/YouDaoManager/system/startssh|GET|成功OK,错误ERROR|200,400|
+|关闭SSH|/YouDaoManager/system/stopssh|GET|成功OK,错误ERROR|200,400|
+|开启adb|/YouDaoManager/system/openadb|GET|OK|200|
+|关闭adb|/YouDaoManager/system/openadb|GET|OK|200|
+|重启|/YouDaoManager/system/reboot|GET|OK或无|200或无响应|
+|重启launcher|/YouDaoManager/system/restartlauncher|GET|OK|200|
+
+
+单词本相关
+|功能|api|方法|返回|status code|
+|-|-|-|-|-|
+|导出全部单词本|/YouDaoManager/tool/ExportWordBook_all|GET|类似词典笔导出单词本|200|
+|导出单词|/YouDaoManager/tool/ExportWordBook_word|GET|仅导出单词|200|
+|导出句子|/YouDaoManager/tool/ExportWordBook_sentence|GET|仅导出句子|200|
+
+
+音乐相关
+|功能|api|方法|返回|status code|
+|-|-|-|-|-|
+|获取音乐文件夹|/YouDaoManager/tool/getmusicFolder|GET|返回格式["aaa.mp3","bbb.mp3"]|200|
+|上传文件到音乐文件夹|/YouDaoManager/tool/MusicUpload|**POST**|直接上传音乐文件即可|200|
+|移除文件|/YouDaoManager/tool/MusicRemove|**POST**|json格式:{"filename":"xxx"}|成功200,错误400|
+
+
+### 编译
 
 ```
 GOARM=7 CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -ldflags="-s -w" -o YouDaoManager

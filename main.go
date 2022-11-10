@@ -31,14 +31,33 @@ func main(){
 		os.Exit(0)
 	})
 	//获取 单词本
-	r.GET(constant.Tool_get_WordBook,func (context *gin.Context)  {
-		bookcontent,status:=wordbookutils.GetWordBook()
+	r.GET(constant.Tool_export_WordBook_All,func (context *gin.Context)  {
+		bookcontent,status:=wordbookutils.ExportAllBooks(constant.Export_wordbooks_all,false)
 		if status{
 			context.String(200,bookcontent)
 		}else{
 			context.String(400,"ERROR")
 		}
 	})
+	//获取 单词本单词部分
+	r.GET(constant.Tool_export_WordBook_word,func (context *gin.Context)  {
+		bookcontent,status:=wordbookutils.ExportAllBooks(constant.Export_wordbooks_word,false)
+		if status{
+			context.String(200,bookcontent)
+		}else{
+			context.String(400,"ERROR")
+		}
+	})
+	r.GET(constant.Tool_export_WordBook_sentence,func (context *gin.Context)  {
+		bookcontent,status:=wordbookutils.ExportAllBooks(constant.Export_wordbooks_sentenses,false)
+		if status{
+			context.String(200,bookcontent)
+		}else{
+			context.String(400,"ERROR")
+		}
+
+	})
+
 	//开启 ssh
 	r.GET(constant.Sys_open_ssh,func(context *gin.Context) {
 		if sshutils.OpenSSH(true){
@@ -51,7 +70,7 @@ func main(){
 	//关闭 ssh
 	r.GET(constant.Sys_stop_ssh,func (context *gin.Context)  {
 		if sshutils.OpenSSH(false){
-			context.String(200,"OK,default user=root,password=CherryYoudao")
+			context.String(200,"OK")
 		}else{
 			context.String(400,"ERROR")
 		}

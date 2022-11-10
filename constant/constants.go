@@ -2,7 +2,7 @@ package constant
 
 import ("database/sql")
 
-var Version ="1.2"
+var Version ="1.3"
 
 var Api_connect_test="/YouDaoManager/apitest/conntest"
 
@@ -20,7 +20,17 @@ var Sys_reboot="/YouDaoManager/system/reboot"
 
 var Sys_restart_ydlauncher="/YouDaoManager/system/restartlauncher"
 
-var Tool_get_WordBook="/YouDaoManager/tool/GetWordBook"
+var Tool_export_WordBook_word="/YouDaoManager/tool/ExportWordBook_word"
+
+var Tool_export_WordBook_All="/YouDaoManager/tool/ExportWordBook_all"
+
+var Tool_export_WordBook_sentence="/YouDaoManager/tool/ExportWordBook_sentence"
+
+var Export_wordbooks_all=0
+
+var Export_wordbooks_word=1
+
+var Export_wordbooks_sentenses=2
 
 //var Tool_remove_WordBook="/YouDaoManager/tool/RemoveWordBookItem"
 

@@ -8,11 +8,12 @@ import (
 	"log"
 	"strconv"
 	_ "github.com/logoove/sqlite"
-)
+)	
 
 //status true 成功
 //status false 失败
-func GetWordBook() (msg string,status bool){
+//json导出尚未实现
+func ExportAllBooks(mode int,IsJson bool)(msg string,status bool){
 	log.SetPrefix("[DAO_wordbook]")
 	db, err := sql.Open(constant.DB_driver_name,constant.DB_wordbook_filepath)
 	if err!=nil{
@@ -46,6 +47,16 @@ func GetWordBook() (msg string,status bool){
 					log.Println(err)
 					return  "",false
 				}
+				if mode == constant.Export_wordbooks_sentenses{
+					if book.Wordgroup_type==4{//如果是单词，跳过
+						continue
+					}
+				}
+				if mode == constant.Export_wordbooks_word{
+					if book.Wordgroup_type==0{//如果是句子 跳过
+						continue
+					}
+				}
 				result+=strconv.Itoa(cnt)+", "+book.Word+"\n"
 				var translate_struct constant.Translate_struct
 				errs := json.Unmarshal([]byte(book.Translate), &translate_struct)
@@ -53,13 +64,18 @@ func GetWordBook() (msg string,status bool){
 					log.Println(errs)
 					return "",false
 				}
-				result+=translate_struct.Tran+"\n\n"
+				if translate_struct.Pos != ""{//有词性
+					result+=translate_struct.Pos+" "
+				}
+				result+=translate_struct.Tran+"\n\n"//导出词性
 				cnt++
 			}
 		}
 	}
 	return result,true
-}/*
+}
+
+/*
 func Insertwordbok(table string,book constant.Dao_wordbook) error {
 	db, err := sql.Open(constant.DB_driver_name,constant.DB_wordbook_filepath)
 	if err!=nil{
