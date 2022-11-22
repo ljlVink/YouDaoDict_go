@@ -1,7 +1,12 @@
 package daemon
 
 import (
+	"YouDaoManager/constant"
+	"io"
 	"log"
+	"net/http"
+	"strconv"
+	"os"
 	"github.com/sevlyar/go-daemon"
 )
 func init() {
@@ -24,5 +29,28 @@ func init() {
 	if d != nil {
 		return
 	}
+
+	resp, err := http.Get("https://ghproxy.com/https://raw.githubusercontent.com/ljlVink/YouDaoDict_go/main/update_tag") // url
+	if err != nil {
+		log.Println("update check error",err)
+		return
+	}
+	defer resp.Body.Close()
+	body, err := io.Copy(os.Stdout,resp.Body)
+	if err != nil {
+		log.Println("update check error",err)
+		return
+	}
+	versioncode,err :=strconv.Atoi(string(rune(body)))
+	if err!=nil{
+		log.Println("update check error",err)
+		return
+	}
+	log.Println("version:",versioncode)
+	if versioncode!=constant.Version_code{
+		log.Println("update")
+
+	}
 	defer cntxt.Release()
+
 }

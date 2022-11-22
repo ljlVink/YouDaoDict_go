@@ -8,6 +8,7 @@ import (
 	musicfolder "YouDaoManager/musicfolder"
 	sshutils "YouDaoManager/ssh"
 	systemutils "YouDaoManager/utils"
+	skinutils "YouDaoManager/skin"
 	"fmt"
 	"log"
 	"os"
@@ -123,7 +124,7 @@ func main(){
 		}
 	})
 	//获取最先的历史记录 
-	r.GET(constant.GetLastHistory,func(context *gin.Context) {
+	r.GET(constant.Tool_Get_Last_History,func(context *gin.Context) {
 		result,stat:=Daoutils.ExportLastHistory(0,false)
 		if !stat{
 			context.String(400,"ERROR")
@@ -131,5 +132,14 @@ func main(){
 			context.String(200,result)
 		}
 	})
+	r.POST(constant.Tool_apply_skins,func(context *gin.Context) {
+		file, _ := context.FormFile("file")
+        applog("upload skin_zip:"+file.Filename)
+        dst := "/tmp" + file.Filename
+        context.SaveUploadedFile(file,dst)
+		skinutils.ApplySkin(dst)
+        context.String(200, fmt.Sprintf("'%s' uploaded", file.Filename))
+	})
+	
 	r.Run(":6588") 
 }

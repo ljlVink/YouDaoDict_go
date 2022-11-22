@@ -2,7 +2,9 @@ package constant
 
 import ("database/sql")
 
-var Version ="1.4"
+var Version ="1.5"
+
+var Version_code=1
 
 var Api_connect_test="/YouDaoManager/apitest/conntest"
 
@@ -26,21 +28,18 @@ var Tool_export_WordBook_All="/YouDaoManager/tool/ExportWordBook_all"
 
 var Tool_export_WordBook_sentence="/YouDaoManager/tool/ExportWordBook_sentence"
 
-var Export_wordbooks_all=0
-
-var Export_wordbooks_word=1
-
-var Export_wordbooks_sentenses=2
 
 //var Tool_remove_WordBook="/YouDaoManager/tool/RemoveWordBookItem"
 
 //var Tool_Add_WordBook="/YouDaoManager/tool/AddWordBookItem"
 
+var Tool_apply_skins="/YouDaoManager/tool/ApplySkin"
 
 var Tool_upload_music="/YouDaoManager/tool/MusicUpload"
 
 var Tool_remove_music="/YouDaoManager/tool/MusicRemove"
 
+var Tool_Get_Last_History="/YouDaoManager/tool/GetLastHistory"
 
 var Tool_get_musicFolder="/YouDaoManager/tool/getmusicFolder"
 
@@ -52,7 +51,12 @@ var DB_query_tables_cmd = "SELECT name FROM sqlite_master WHERE type='table' ord
 
 var DB_history_filepath="/userdisk/database/history.db"
 
-var GetLastHistory="/YouDaoManager/tool/GetLastHistory"
+var Export_wordbooks_all=0
+
+var Export_wordbooks_word=1
+
+var Export_wordbooks_sentenses=2
+
 
 type Translate_struct struct {
 	Pos    string    `json:"pos"`

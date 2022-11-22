@@ -50,6 +50,40 @@ api测试功能
 |获取历史记录|/YouDaoManager/tool/GetLastHistory|GET|获取最近第一条历史记录|200|
 
 
+皮肤相关
+
+|功能|api|方法|返回|status code|
+|-|-|-|-|-|
+|更换皮肤|/YouDaoManager/tool/ApplySkin|**POST**|上传images文件夹的压缩包即可|200|
+
+关于压缩包注意事项
+
+1.词典笔的一些图片资源在`/oem/YoudaoDictPen/output/images`文件夹
+
+打包时类似zip的文件格式
+
+```
+images.zip
+│  history_clear_close.png
+│  home-audioplayer-bg.png
+│  home-audioplayer.png
+│  home-dict-bg.png
+│  home-dict.png
+│  home-fav-bg.png
+```
+
+而不是嵌套文件夹，错误示例
+
+```
+images.zip
+├─images
+|   history_clear_close.png
+|   home-audioplayer-bg.png
+|   home-audioplayer.png
+```
+
+
+
 音乐相关
 |功能|api|方法|返回|status code|
 |-|-|-|-|-|
