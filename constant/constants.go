@@ -4,7 +4,7 @@ import ("database/sql")
 
 var Version ="1.5"
 
-var Version_code=1
+var Version_code=0
 
 var Api_connect_test="/YouDaoManager/apitest/conntest"
 
