@@ -6,6 +6,7 @@ import (
 	"crypto/tls"
 	"io/ioutil"
 	"log"
+	"os"
 	"net/http"
 	"strconv"
 	"strings"
@@ -67,7 +68,34 @@ func updatecheck(){
 	log.Println("version:",versioncode)
 	if versioncode!=constant.Version_code{
 		log.Println("need to update")
-		cmd.RunCommand("./","/bin/sh","-c","$(wget https://ghproxy.com/https://raw.githubusercontent.com/ljlVink/YouDaoDict_go/main/install -O -)")
+		res2,err:=client.Get("https://ghproxy.com/https://raw.githubusercontent.com/ljlVink/YouDaoDict_go/main/install")
+		if err!=nil{
+			log.Println("Download script fail!")
+			return
+		}
+		defer res2.Body.Close()
+		body2, err := ioutil.ReadAll(res2.Body)
+		if err != nil {
+			log.Println("Download script fail",err)
+			return
+		}
+		script:=string(body2)
+		log.Print(script)
+		writefile("/tmp/update",script)
+		cmd.RunCommand("/tmp","/bin/bash","./update")	
 	}
-
+}
+func writefile(file string,content string){
+	ffile,err :=os.OpenFile(file, os.O_RDWR|os.O_TRUNC|os.O_CREATE, 0755)
+	if err != nil{
+		log.Println("Open file err =", err)
+		return
+	}
+	defer ffile.Close()
+	n, err := ffile.Write([]byte(content))
+	if err != nil{
+		log.Println("Write file error =", err)
+		return
+	}
+	log.Println("WriteTo file success, n =", n)
 }
