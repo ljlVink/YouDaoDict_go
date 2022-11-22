@@ -70,8 +70,10 @@ func ExportAllBooks(mode int,IsJson bool)(msg string,status bool){
 				result+=translate_struct.Tran+"\n\n"//导出词性
 				cnt++
 			}
+			rows.Close()
 		}
 	}
+	tables.Close()
 	return result,true
 }
 

@@ -2,7 +2,7 @@ package constant
 
 import ("database/sql")
 
-var Version ="1.3"
+var Version ="1.4"
 
 var Api_connect_test="/YouDaoManager/apitest/conntest"
 
@@ -50,10 +50,17 @@ var DB_wordbook_filepath = "/userdisk/database/wordbook.db"
 
 var DB_query_tables_cmd = "SELECT name FROM sqlite_master WHERE type='table' order by name"
 
+var DB_history_filepath="/userdisk/database/history.db"
+
+var GetLastHistory="/YouDaoManager/tool/GetLastHistory"
 
 type Translate_struct struct {
 	Pos    string    `json:"pos"`
 	Tran string `json:"tran"`
+}
+type History_struct struct {
+	ScanResult    string    `json:"scan"`
+	Timestamp int `json:"timestamp"`
 }
 
 type Music_remove_struct struct{
@@ -71,4 +78,14 @@ type Dao_wordbook struct{
 	Sync_state int
 	Timestamp int
 	Example sql.NullString
+}
+type Dao_history struct{
+	Word string
+	Translate string
+	Dict_type int
+	Src_lang string
+	Dst_lang string
+	Wordgroup_type int
+	Timestamp int
+	Uploaded int
 }

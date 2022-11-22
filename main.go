@@ -3,8 +3,8 @@ package main
 import (
 	adbutils "YouDaoManager/adb"
 	constant "YouDaoManager/constant"
-	_ "YouDaoManager/daemon"
-	wordbookutils "YouDaoManager/dao"
+	_ "YouDaoManager/appinit"
+	Daoutils "YouDaoManager/dao"
 	musicfolder "YouDaoManager/musicfolder"
 	sshutils "YouDaoManager/ssh"
 	systemutils "YouDaoManager/utils"
@@ -32,7 +32,7 @@ func main(){
 	})
 	//获取 单词本
 	r.GET(constant.Tool_export_WordBook_All,func (context *gin.Context)  {
-		bookcontent,status:=wordbookutils.ExportAllBooks(constant.Export_wordbooks_all,false)
+		bookcontent,status:=Daoutils.ExportAllBooks(constant.Export_wordbooks_all,false)
 		if status{
 			context.String(200,bookcontent)
 		}else{
@@ -41,7 +41,7 @@ func main(){
 	})
 	//获取 单词本单词部分
 	r.GET(constant.Tool_export_WordBook_word,func (context *gin.Context)  {
-		bookcontent,status:=wordbookutils.ExportAllBooks(constant.Export_wordbooks_word,false)
+		bookcontent,status:=Daoutils.ExportAllBooks(constant.Export_wordbooks_word,false)
 		if status{
 			context.String(200,bookcontent)
 		}else{
@@ -49,7 +49,7 @@ func main(){
 		}
 	})
 	r.GET(constant.Tool_export_WordBook_sentence,func (context *gin.Context)  {
-		bookcontent,status:=wordbookutils.ExportAllBooks(constant.Export_wordbooks_sentenses,false)
+		bookcontent,status:=Daoutils.ExportAllBooks(constant.Export_wordbooks_sentenses,false)
 		if status{
 			context.String(200,bookcontent)
 		}else{
@@ -109,6 +109,7 @@ func main(){
 		result:=musicfolder.GetFolder()
 		context.String(200,result)
 	})
+	//删除音乐文件夹的文件
 	r.POST(constant.Tool_remove_music,func(context *gin.Context) {
 		json := constant.Music_remove_struct{}
 		context.BindJSON(&json)
@@ -119,6 +120,15 @@ func main(){
 			context.String(400,"ERROR")
 		}else{
 			context.String(200,"OK")
+		}
+	})
+	//获取最先的历史记录 
+	r.GET(constant.GetLastHistory,func(context *gin.Context) {
+		result,stat:=Daoutils.ExportLastHistory(0,false)
+		if !stat{
+			context.String(400,"ERROR")
+		}else{
+			context.String(200,result)
 		}
 	})
 	r.Run(":6588") 

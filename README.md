@@ -43,6 +43,12 @@ api测试功能
 |导出单词|/YouDaoManager/tool/ExportWordBook_word|GET|仅导出单词|200|
 |导出句子|/YouDaoManager/tool/ExportWordBook_sentence|GET|仅导出句子|200|
 
+历史记录相关
+
+|功能|api|方法|返回|status code|
+|-|-|-|-|-|
+|获取历史记录|/YouDaoManager/tool/GetLastHistory|GET|获取最近第一条历史记录|200|
+
 
 音乐相关
 |功能|api|方法|返回|status code|
