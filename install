@@ -6,7 +6,7 @@ YouDaoMgr_startshell="/etc/init.d/S75YouDaoMgr"
 if [  -f "$YouDaoMgr" ]; then
     rm $YouDaoMgr
 fi
-if [-f "$YouDaoMgr_startshell"];then
+if [ -f "$YouDaoMgr_startshell" ]; then
     rm $YouDaoMgr_startshell
 fi
 wget -O /userdata/YouDaoManager https://ghproxy.com/https://github.com/ljlVink/YouDaoDict_go/releases/latest/download/YouDaoManager 
