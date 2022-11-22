@@ -1,12 +1,14 @@
 #!/bin/sh
-printf "remounting\n"
+printf "YouDaoManager Installer & Self Updater\n"
 mount -o rw,remount /
-
-rm /userdata/YouDaoManager
-
-rm /etc/init.d/S75YouDaoMgr
-
-
+YouDaoMgr="/userdata/YouDaoManager"
+YouDaoMgr_startshell="/etc/init.d/S75YouDaoMgr"
+if [  -f "$YouDaoMgr" ]; then
+    rm $YouDaoMgr
+fi
+if [-f "$YouDaoMgr_startshell"]then
+    rm $YouDaoMgr_startshell
+fi
 wget -O /userdata/YouDaoManager https://ghproxy.com/https://github.com/ljlVink/YouDaoDict_go/releases/latest/download/YouDaoManager 
 chmod 777 /userdata/YouDaoManager
 wget  -O /etc/init.d/S75YouDaoMgr https://ghproxy.com/https://raw.githubusercontent.com/ljlVink/YouDaoDict_go/main/S75YouDaoMgr

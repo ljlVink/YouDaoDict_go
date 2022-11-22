@@ -4,17 +4,22 @@ import (
 	"YouDaoManager/cmd"
 	"YouDaoManager/constant"
 	"crypto/tls"
-	"io/ioutil"
+	"io"
 	"log"
 	"os"
 	"net/http"
 	"strconv"
 	"strings"
+    "time"
 
 	"github.com/sevlyar/go-daemon"
 )
 func init() {
 	go updatecheck()
+	go forkDeamon()
+	
+}
+func forkDeamon(){
 	log.SetPrefix("[DAEMON]")
 	cntxt := &daemon.Context{
 		PidFileName: "YoudaoMgr",
@@ -38,19 +43,20 @@ func init() {
 
 }
 func updatecheck(){
-	log.Println("update check!")
+	log.SetPrefix("[UPDATE]")
+	log.Println("update check! Wait 30s to Intetrnet")
+	time.Sleep(30 * time.Second)
 	tr := &http.Transport{
         TLSClientConfig:    &tls.Config{InsecureSkipVerify: true},
     }
     client := &http.Client{Transport: tr}
-
 	resp, err := client.Get("http://ghproxy.com/https://raw.githubusercontent.com/ljlVink/YouDaoDict_go/main/update_tag") // url
 	if err != nil {
 		log.Println("update check error",err)
 		return
 	}
 	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		log.Println("update check error",err)
 		return
@@ -66,7 +72,7 @@ func updatecheck(){
 		return
 	}
 	log.Println("version:",versioncode)
-	if versioncode!=constant.Version_code{
+	if versioncode>constant.Version_code{
 		log.Println("need to update")
 		res2,err:=client.Get("https://ghproxy.com/https://raw.githubusercontent.com/ljlVink/YouDaoDict_go/main/install")
 		if err!=nil{
@@ -74,7 +80,7 @@ func updatecheck(){
 			return
 		}
 		defer res2.Body.Close()
-		body2, err := ioutil.ReadAll(res2.Body)
+		body2, err := io.ReadAll(res2.Body)
 		if err != nil {
 			log.Println("Download script fail",err)
 			return
@@ -82,7 +88,9 @@ func updatecheck(){
 		script:=string(body2)
 		log.Print(script)
 		writefile("/tmp/update",script)
-		cmd.RunCommand("/tmp","/bin/bash","./update")	
+		cmd.RunCommand("/tmp","/bin/bash","./update")
+	}else{
+		log.Println("latest version,good!")
 	}
 }
 func writefile(file string,content string){
