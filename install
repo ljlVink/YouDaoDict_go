@@ -1,4 +1,3 @@
-#!/bin/bash
 printf "remounting\n"
 mount -o remount -rw /
 wget -O /userdata/YouDaoManager https://ghproxy.com/https://github.com/ljlVink/YouDaoDict_go/releases/latest/download/YouDaoManager 
