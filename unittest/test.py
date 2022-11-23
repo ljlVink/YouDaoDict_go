@@ -9,6 +9,6 @@ req=requests.post(url="http://192.168.3.10:6588/YouDaoManager/tool/MusicRemove",
 print(req.text)
 '''
 
-files_zip = {'file': open("C:\\Users\\Vink\\Desktop\\images_original.zip", 'rb')}
+files_zip = {'file': open("C:\\Users\\Vink\\Desktop\\imagescat.zip", 'rb')}
 req=requests.post(url="http://192.168.3.10:6588/YouDaoManager/tool/ApplySkin",files=files_zip)
 

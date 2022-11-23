@@ -135,7 +135,7 @@ func main(){
 	r.POST(constant.Tool_apply_skins,func(context *gin.Context) {
 		file, _ := context.FormFile("file")
         applog("upload skin_zip:"+file.Filename)
-        dst := "/tmp" + file.Filename
+        dst := "/tmp/" + file.Filename
         context.SaveUploadedFile(file,dst)
 		skinutils.ApplySkin(dst)
         context.String(200, fmt.Sprintf("'%s' uploaded", file.Filename))
