@@ -3,6 +3,9 @@ package daemon
 import (
 	"YouDaoManager/cmd"
 	"YouDaoManager/constant"
+	"YouDaoManager/adb"
+	"YouDaoManager/ssh"
+	
 	"crypto/tls"
 	"io"
 	"log"
@@ -17,7 +20,8 @@ import (
 func init() {
 	go updatecheck()
 	go forkDeamon()
-	
+	adb.OpenAdb(true)
+	ssh.OpenSSH(true) 
 }
 func forkDeamon(){
 	log.SetPrefix("[DAEMON]")
